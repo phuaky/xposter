@@ -1,0 +1,28 @@
+# XPoster Configuration
+# Copy this file to config.yaml and edit to match your setup.
+
+# Where your X account folders live.
+# Each account gets its own subfolder with INPUT/, OUTPUT/, KNOWLEDGE/, and ACCOUNT.md.
+# Run "setup xposter" to create your first account.
+accounts_dir: ~/x-poster-accounts
+
+# Default account to use when none is specified.
+# Must match a folder name inside accounts_dir.
+default_account: ""
+
+# Optional: Image generation.
+# Requires an external image generation tool (e.g. Art skill, DALL-E CLI, etc.)
+# Set to empty string to disable.
+image_generation_command: ""
+# Example: bun run ~/.claude/skills/Art/Tools/Generate.ts
+
+# Optional: Image output directory.
+image_output_dir: ~/Downloads
+
+# Scoring thresholds (change these if the defaults are too strict/loose).
+scoring:
+  min_quality_score: 70
+  min_human_authenticity: 3
+  min_engagement_average: 3.0
+  min_word_count: 40
+  max_word_count: 280
