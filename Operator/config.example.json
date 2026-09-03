@@ -1,0 +1,23 @@
+{
+  "accounts_dir": "~/Code/<business-repo>/accounts",
+  "offer_file": "~/Code/<business-repo>/offers/OFFER.md",
+  "offer_version": "<offer-version-tag>",
+  "drafts_globs": [
+    "~/Code/<business-repo>/accounts/*/working/drafts/*.json",
+    "~/Code/<business-repo>/accounts/*/working/drafts/*.md"
+  ],
+  "ledger_file": "~/Code/<business-repo>/founder/OPERATOR-LEDGER.md",
+  "runs_dir": "~/Code/<business-repo>/founder/operator-runs",
+  "telegram_cmd": ["bun", "~/Code/<founder-os>/scripts/telegram.ts"],
+  "claude_bin": "claude",
+  "claude_flags": ["--print", "--output-format", "text", "--allowedTools", "Read,Write,Glob,Grep,Bash(bun *)"],
+  "models": {
+    "MorningFire": "opus",
+    "ReplyWatch": "sonnet",
+    "WeeklyDirection": "opus"
+  },
+  "send_stale_hours": 24,
+  "live_stages": ["replied", "scoping", "proposed"],
+  "asks_target": 30,
+  "mandate": null
+}

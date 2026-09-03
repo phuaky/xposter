@@ -2,3 +2,5 @@ config.yaml
 AlgorithmUpdates/
 .DS_Store
 node_modules/
+Operator/config.json
+Operator/runs/
