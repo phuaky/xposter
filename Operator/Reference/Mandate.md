@@ -6,6 +6,10 @@ This file is a contract between the founder and the Operator. It is OFF until th
 
 The founder's own register records the regret rate on every send that actually fired as zero, and records four accountability resets that produced documents and no sends. The cheapest, most reversible class of send, a first-touch priced ask to a qualified stranger, is the class that most reliably does not fire. Removing the human from exactly that class, and no other, is the smallest change that could move ASKS.
 
+## What the evidence says about this class
+
+Be clear-eyed before signing. In the founder's own ledger, cold priced email has produced zero replies on thirteen priced asks and zero on seventy-one emails of any kind. Every buyer who engaged in 2026 came through a job interview, an inbound, a warm introduction, or an unpriced value-first touch. The mandate exists to finish the founder's own thirty-ask experiment cheaply and without his hand, so that the silence finally carries information. It is not the Operator's main route to cash. The main routes stay human-fired and sit above this class in every morning queue.
+
 ## The mandated class (all conditions must hold)
 
 1. The recipient is a company with no prior human conversation with the founder. No reply, no call, no meeting on record.

@@ -14,12 +14,14 @@ Produce today's fire pack: the one to three sends that leave the building today,
 
 ## Step 1: Rank the queue
 
-Order by cost of silence, highest first:
+Order by evidence of reply, highest first. The founder's own ledger (four months, 78 dossiers) says where replies come from: every buyer who engaged in 2026 came from a job interview, an inbound, a warm introduction, or an unpriced value-first touch. Thirteen cold priced emails got zero replies. Seventy-one cold emails of any kind got zero replies. The queue follows the evidence, not the plan.
 
-1. A live deal whose counterparty is waiting on us (stage replied, scoping, or proposed, and `next_permitted_move` is a send).
-2. A live deal past its own stated nudge date or offer validity date. One closed-lost ping only ("did this die? a clean no helps me"), then formal-dead.
-3. An unsent priced ask to a qualified stranger that already exists as a draft on disk. Age over 24 hours means it fires today as drafted or is killed with one logged line. It is not re-reviewed.
-4. A new priced ask to a qualified stranger from the demand bench, only after 1 to 3 are empty.
+1. A live deal waiting on us (stage replied, scoping, or proposed, and `next_permitted_move` is a send). The oldest first.
+2. A live deal past its own stated nudge date or offer validity date. One closed-lost ping ("did this die? a clean no helps me"), then formal-dead. Never a second.
+3. A referral ask to a past payer or a delighted contact: "who are two people this would matter to?" It has fired zero times across six paid deliveries, it costs nothing, and the founder's register mandates it at handover. Friends refer; they are never asked to buy.
+4. An interview-to-vendor pivot: any job-application thread that reached a human (interview, recruiter reply, hiring manager) gets the fixed-price engagement proposed in the founder's words. This is the motion that produced the only priced proposal a buyer ever engaged with.
+5. An unsent priced ask that already exists as a draft on disk. Age over 24 hours means it fires today as drafted or is killed with one logged line. It is not re-reviewed.
+6. A new cold priced ask from the demand bench, only to complete the founder's own thirty-ask experiment, and labelled in the Telegram line as the low-signal lane. Never ahead of 1 to 5.
 
 Cap the pack at three sends. Three is a fire pack. Four is a to-do list, and to-do lists do not fire.
 
@@ -89,6 +91,13 @@ Queue: <company> proposed, hold requested <date>, offer validity ended <date>, 1
 **Example 2: drafts sitting on disk**
 ```
 Queue: 4 priced-ask drafts, adversarially reviewed 11 days ago, none sent.
--> Rank 3. Oldest three go on today's page verbatim. No review. Fourth is tomorrow's.
--> Telegram: "3 sends, ~10 min. ASKS 0/30."
+-> Rank 5. Oldest three go on today's page verbatim. No review. Fourth is tomorrow's.
+-> Telegram: "3 sends, ~10 min. ASKS 1/30 (cold lane: 0 replies on 13, low signal)."
+```
+
+**Example 3: a past payer with no referral ask**
+```
+Queue: sam-reed won, paid Jun 23, no referral-ask event in LOG.
+-> Rank 3. Two-sentence WhatsApp: the scope just sent to an accounting firm, and "who are two people this would matter to?"
+-> No pitch. No price. The referral is the ask.
 ```

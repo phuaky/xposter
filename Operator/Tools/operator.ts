@@ -120,10 +120,13 @@ interface QueueItem {
 
 interface Draft { path: string; account: string | null; age_hours: number; referenced_by_sent_entry: boolean; }
 
+interface WarmLead { account: string; kind: "referral-ask-due" | "interview-pivot"; last_event: string; ts: string; age_hours: number; summary: string; }
+
 interface Queue {
   generated_at: string;
   asks: { fired: number; target: number; by_version: Record<string, number> };
   live: QueueItem[];
+  warm: WarmLead[];
   unsent_drafts: Draft[];
   last_verdict: string | null;
   mandate_on: boolean;
@@ -217,12 +220,35 @@ function lastVerdict(cfg: Config): string | null {
   return lines.length ? lines[lines.length - 1] : null;
 }
 
+// Past payers with no referral ask on record, and job-application threads that reached a human
+// (interview, recruiter reply) with no vendor pivot proposed. These are the two send classes with
+// the best reply evidence in the founder's own ledger.
+function warmLeads(entries: LogEntry[], cfg: Config, now: number): WarmLead[] {
+  const byAccount = new Map<string, LogEntry[]>();
+  for (const e of entries) (byAccount.get(e.account) ?? byAccount.set(e.account, []).get(e.account)!).push(e);
+  const out: WarmLead[] = [];
+  for (const [account, list] of byAccount) {
+    list.sort((a, b) => Date.parse(a.ts) - Date.parse(b.ts));
+    const newest = list[list.length - 1];
+    const stage = newest.fields["stage_after"] ?? "";
+    const text = (e: LogEntry) => `${e.event} ${e.fields["summary"] ?? ""} ${e.fields["next_permitted_move"] ?? ""}`.toLowerCase();
+    const paid = list.some(e => /^payment/i.test(e.event) || stage === "won");
+    const referralAsked = list.some(e => /referral/.test(text(e)));
+    if (paid && !referralAsked) out.push({ account, kind: "referral-ask-due", last_event: newest.event, ts: newest.ts, age_hours: hoursSince(newest.ts, now), summary: newest.fields["summary"] ?? "" });
+    const reachedHuman = list.some(e => /(interview|recruiter|hiring manager|call)/.test(text(e)));
+    const pivoted = list.some(e => /(pivot|scope|proposal|proposed)/.test(text(e))) || ["scoping", "proposed", "won", "delivering"].includes(stage);
+    if (reachedHuman && !pivoted && !["dormant", "closed-lost"].includes(stage)) out.push({ account, kind: "interview-pivot", last_event: newest.event, ts: newest.ts, age_hours: hoursSince(newest.ts, now), summary: newest.fields["summary"] ?? "" });
+  }
+  return out.sort((a, b) => b.age_hours - a.age_hours);
+}
+
 export function buildQueue(cfg: Config, now = Date.now()): Queue {
   const entries = loadAllLogs(cfg);
   return {
     generated_at: new Date(now).toISOString(),
     asks: countAsks(entries, cfg),
     live: liveItems(entries, cfg, now),
+    warm: warmLeads(entries, cfg, now),
     unsent_drafts: findDrafts(cfg, entries, now),
     last_verdict: lastVerdict(cfg),
     mandate_on: !!cfg.mandate?.signed_on,
@@ -297,7 +323,7 @@ async function runWorkflow(cfg: Config, name: string) {
   }
   const idx = out.lastIndexOf("TELEGRAM:");
   const msg = idx >= 0 ? out.slice(idx + "TELEGRAM:".length).trim() : out.split("\n").slice(0, 12).join("\n");
-  ledgerAppend(cfg, `${todayIso()} ${name} ran. asks ${queue.asks.fired}/${queue.asks.target}. live ${queue.live.length}. drafts ${queue.unsent_drafts.length}. run ${basename(runFile)}`);
+  ledgerAppend(cfg, `${todayIso()} ${name} ran. asks ${queue.asks.fired}/${queue.asks.target}. live ${queue.live.length}. warm ${queue.warm.length}. drafts ${queue.unsent_drafts.length}. run ${basename(runFile)}`);
   await telegram(cfg, msg);
   console.log(msg);
 }

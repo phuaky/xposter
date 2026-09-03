@@ -23,7 +23,8 @@ The Operator's rules are the founder's rules, restated as checks a script or a m
 | Verified once | Every fact stamped with date and source | Cut the unverified fact |
 | Voice | Under the channel's sentence cap, no AI tells, no em dashes, one yes/no ask | Rewrite |
 | Channel continuity | Replies stay on the channel and account where the thread lives | Fix the channel |
-| Not a friend | The recipient is a stranger or structurally warm, not a friend paying out of goodwill | Not an ASK |
+| Not a friend | The recipient is a stranger or structurally warm, not a friend paying out of goodwill | Not an ASK. A friend gets the referral ask instead |
+| Cold lane labelled | A first-touch cold priced email is marked low-signal in the summary (0 replies on 13 priced, 0 on 71 total in the founder's ledger) | Label it; never rank it above a live reply, a chase, a referral ask, or an interview pivot |
 
 ## Timing rules
 
