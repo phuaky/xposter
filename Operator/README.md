@@ -8,6 +8,7 @@ A Claude Code skill that sits in the founder's prompt seat and keeps the send lo
 - `Reference/PromptLibrary.md` holds the prompt shapes that worked, extracted from history.
 - `Reference/Mandate.md` is the one bounded autonomy contract, off by default.
 - `Tools/operator.ts` reads account dossiers and drafts, builds the queue, runs a workflow through `claude -p`, keeps the ledger, and posts to Telegram.
+- `Tools/telegram.ts` posts plain text to the founder's Telegram (token and chat id from env or `~/.claude/.env`).
 - `Tools/install-launchd.sh` schedules the cycle on macOS.
 
 This directory is template-only. Private specifics (deal names, prices, paths, the signed mandate) live in `config.json` and in the founder's private repos, never here.
