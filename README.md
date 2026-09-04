@@ -116,10 +116,6 @@ XPoster ships with current X algorithm knowledge (Phoenix/Grok era, Jan 2026):
 
 Run `update algorithm` periodically to fetch the latest insights.
 
-## Operator (new)
-
-`Operator/` is a second skill in this repo: an autonomous prompt-writer that sits in the founder's seat and keeps the send loop going (morning fire pack, reply watch, evening verdict, weekly direction), gating every human prompt through the founder's own standing orders. It is template-only; private specifics live in `Operator/config.json` (gitignored). See `Operator/README.md`.
-
 ## License
 
 MIT

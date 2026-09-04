@@ -1,0 +1,20 @@
+{
+  "accounts_dir": "/home/user/aug-workflowlab-sg/accounts",
+  "offer_file": "/home/user/aug-workflowlab-sg/offers/OFFER.md",
+  "offer_version": "workflowlab-diagnostic-v1",
+  "drafts_globs": [
+    "/home/user/aug-workflowlab-sg/accounts/*/working/drafts/*.json",
+    "/home/user/aug-workflowlab-sg/accounts/*/working/drafts/*.md",
+    "/home/user/founder-home/outreach/2026-08-23-diagnostic-drafts-*.md"
+  ],
+  "ledger_file": "/tmp/claude-0/-home-user-xposter/13656693-726f-5783-8074-9891aa3c17ae/scratchpad/day1/OPERATOR-LEDGER.md",
+  "runs_dir": "/tmp/claude-0/-home-user-xposter/13656693-726f-5783-8074-9891aa3c17ae/scratchpad/day1/runs",
+  "telegram_cmd": null,
+  "claude_bin": "claude",
+  "claude_flags": ["--print", "--output-format", "text"],
+  "models": {"MorningFire": "opus", "ReplyWatch": "sonnet", "WeeklyDirection": "opus"},
+  "send_stale_hours": 24,
+  "live_stages": ["replied", "scoping", "proposed"],
+  "asks_target": 30,
+  "mandate": null
+}
