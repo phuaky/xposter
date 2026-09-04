@@ -132,7 +132,7 @@ interface Queue {
   mandate_on: boolean;
 }
 
-const SEND_VERBS = /^(send|reply|draft|propose|nudge|ping|answer|approve|chase|follow|deliver|confirm|book|schedule|run|inspect)/i;
+const SEND_VERBS = /^(send|reply|draft|propose|nudge|ping|answer|approve|chase|follow|deliver|confirm|book|schedule|run|inspect|resolve|decide|review|extend)/i;
 const WAIT_VERBS = /^(await|hold|wait|watch)/i;
 
 function loadAllLogs(cfg: Config): LogEntry[] {
@@ -147,15 +147,20 @@ function loadAllLogs(cfg: Config): LogEntry[] {
 }
 
 function countAsks(entries: LogEntry[], cfg: Config) {
+  // Tagged: outbound entries carrying offer_version (the convention going forward).
+  // Inferred: older outbound entries whose summary names a S$ price (labelled, never merged into the tagged count).
   const byVersion: Record<string, Set<string>> = {};
+  const inferred = new Set<string>();
   for (const e of entries) {
     const isOutbound = /^(send|outbound)/i.test(e.event) || e.event === "fired-by-operator";
+    if (!isOutbound) continue;
     const v = e.fields["offer_version"];
-    if (!isOutbound || !v) continue;
-    (byVersion[v] ??= new Set()).add(e.account);
+    if (v) (byVersion[v] ??= new Set()).add(e.account);
+    else if (/(S\$|SGD|US\$)\s?\d/.test(e.fields["summary"] ?? "")) inferred.add(e.account);
   }
   const by: Record<string, number> = {};
   for (const [k, s] of Object.entries(byVersion)) by[k] = s.size;
+  if (inferred.size) by["inferred-priced-untagged"] = inferred.size;
   return { fired: by[cfg.offer_version] ?? 0, target: cfg.asks_target, by_version: by };
 }
 
@@ -235,7 +240,7 @@ function warmLeads(entries: LogEntry[], cfg: Config, now: number): WarmLead[] {
     const paid = list.some(e => /^payment/i.test(e.event) || stage === "won");
     const referralAsked = list.some(e => /referral/.test(text(e)));
     if (paid && !referralAsked) out.push({ account, kind: "referral-ask-due", last_event: newest.event, ts: newest.ts, age_hours: hoursSince(newest.ts, now), summary: newest.fields["summary"] ?? "" });
-    const reachedHuman = list.some(e => /(interview|recruiter|hiring manager|call)/.test(text(e)));
+    const reachedHuman = list.some(e => /^(call|interview|meeting)/i.test(e.event) || /\b(interview|recruiter|hiring manager)\b/i.test(e.fields["summary"] ?? ""));
     const pivoted = list.some(e => /(pivot|scope|proposal|proposed)/.test(text(e))) || ["scoping", "proposed", "won", "delivering"].includes(stage);
     if (reachedHuman && !pivoted && !["dormant", "closed-lost"].includes(stage)) out.push({ account, kind: "interview-pivot", last_event: newest.event, ts: newest.ts, age_hours: hoursSince(newest.ts, now), summary: newest.fields["summary"] ?? "" });
   }
